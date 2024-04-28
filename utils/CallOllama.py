@@ -25,9 +25,9 @@ class CallOllama:
             },
         ])
         print('#############################################', file=sys.stderr)
-        print('###### input to {model_name} in Ollama ######', file=sys.stderr)
+        print(f'###### input to {model_name} in Ollama ######', file=sys.stderr)
         print(text, file=sys.stderr)
-        print('###### response of {model_name} in Ollama ######', file=sys.stderr)
+        print(f'###### response of {model_name} in Ollama ######', file=sys.stderr)
         print(response['message']['content'], file=sys.stderr)
         
         return response['message']['content'], response
