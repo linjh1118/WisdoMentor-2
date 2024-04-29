@@ -1,6 +1,6 @@
 import os
 import json
-from WisdoM import WMReranker
+from WMReranker import WMReranker
 from llama_index.core import Settings, VectorStoreIndex, SimpleDirectoryReader
 from llama_index.embeddings.huggingface import HuggingFaceEmbedding
 from llama_index.llms.replicate import Replicate
