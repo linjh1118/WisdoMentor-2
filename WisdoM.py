@@ -70,4 +70,14 @@ class WMReranker:
         )
         reranked_response = query_engine.query(question)
         return reranked_response
+        
+    #longcontext Rerank
+    def long_context_rerank(self, question):
+        self.reorder_engine = RetrieverQueryEngine(
+            retriever=self.retriever,
+            response_synthesizer=None,  #如果是None，自动采用设置的llm判断相似度
+            node_postprocessors=[self.reorder],
+            )
+        reranked_response = self.reorder_engine.query(question)
+        return reranked_response
 
