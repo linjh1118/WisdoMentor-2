@@ -43,7 +43,7 @@ def LOAD_DOC_ASK_LLM_AND_RETRIEVE(
     similarity_cutoff=0.6,
     ):
     #设置开始
-    os.environ["REPLICATE_API_TOKEN"] = "r8_Cp6ifnUNQoNNeJ5sEYYSVOLH0u1DkqJ2rAsDW"
+    os.environ["REPLICATE_API_TOKEN"] = "r8_cSXMacPgcDCvEa3ufjvqP8yt3MkZFlx3a4TIa"
 
     # set the LLM
     llama2_7b_chat = "meta/llama-2-7b-chat:8e6975e5ed6174911a6ff3d60540dfd4844201974602551e10e9e87ab143d81e"
