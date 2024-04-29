@@ -33,7 +33,7 @@ class WMReranker:
         )
 
     #Colbert Rerank
-    def colbert_rerank(self, question):
+    def colbert_rerank(self, question, similarity_cutoff=0.6):
         query_engine = RetrieverQueryEngine(
             retriever=self.retriever,
             response_synthesizer=None,  # 如果是None，自动采用设置的llm判断相似度
