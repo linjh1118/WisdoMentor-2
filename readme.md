@@ -35,7 +35,11 @@ from WisdoM import WMReranker
 ~~~
     reranked_response = reranker.st_rerank(question, similarity_cutoff=0.6)
 ~~~
-![图片3](_v_images/20240428235813385_28154.png )
+**Long_context_rerank**
+~~~
+    reranked_response = reranker.long_context_rerank(question)
+~~~
+![图片3](_v_images/图片3.png )
 
 ### 打印回答：
 ~~~
