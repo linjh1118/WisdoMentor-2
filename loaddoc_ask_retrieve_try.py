@@ -109,7 +109,9 @@ def LOAD_DOC_ASK_LLM_AND_RETRIEVE(
 #    reranked_response = reranker.gpt_rerank(question, similarity_cutoff=0.6)
     #st_rerank
 #    reranked_response = reranker.st_rerank(question, similarity_cutoff=0.6)
-
+    #LongcontextRerank
+#    reranked_response = reranker.long_context_rerank(question)
+        
     #提问
     question=question
     response=query_engine.query(question)
