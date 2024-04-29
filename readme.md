@@ -4,7 +4,7 @@
 ## 使用示例：
 ### 导入
 ~~~
-from WisdoM import WMReranker
+from WMReranker import WMReranker
 ~~~
 ### 接着创建实例：
 ~~~
