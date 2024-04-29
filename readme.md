@@ -1,5 +1,5 @@
 # 使用
-将跑通的几个Reranker添加进去了。包括：Colbert Rerank、FlagEmbeddingReranker、RankGPTReranker、SentenceTransformerRerank（Jina因为api有限额没进行添加，Longcontext Rerank加在colbert后面得到的回答 答非所问）
+将跑通的几个Reranker添加进去了。包括：Colbert Rerank、FlagEmbeddingReranker、RankGPTReranker、SentenceTransformerRerank、Longcontext Rerank（Jina因为api有限额没进行添加，Longcontext Rerank加在colbert后面得到的回答 答非所问，但是单独使用效果还行，目前尚未解决longcontextrerank的中英文对应问题）
 
 ## 使用示例：
 ### 导入
