@@ -115,11 +115,16 @@ class WMPromptZip:
         self._init_llmlingua_2(model)
         res = self._llm_lingua_2.compress_prompt(
             context=context,
-            instruction=instruction,
-            question=question,
+            instruction="",
+            question="",
             rate=rate,
             force_tokens=force_tokens,
         )
+        prompt = res['compressed_prompt']
+        if instruction != "":
+            prompt = instruction + '\n\n' + prompt
+        if question != "":
+            prompt = prompt + '\n\n' + question
 
-        return res['compressed_prompt'], res['compressed_tokens']
+        return prompt, res['compressed_tokens']
     
