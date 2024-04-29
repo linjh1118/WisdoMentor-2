@@ -31,7 +31,9 @@ class WMReranker:
             model="cross-encoder/ms-marco-MiniLM-L-2-v2",
             top_n=top_n
         )
+        self.reorder = LongContextReorder()
 
+    
     #Colbert Rerank
     def colbert_rerank(self, question, similarity_cutoff=0.6):
         query_engine = RetrieverQueryEngine(
