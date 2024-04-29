@@ -17,7 +17,7 @@ from WisdoM import WMReranker
     )
 ~~~
 尝试了使用Longcontextreranker，但是效果感觉明显差很多然后没有加上去。
-![图片2](_v_images/20240428235738803_27726.png )
+![图片2](Fig/20240428235738803_27726.png )
 ### 调用重排方法（相似度可以修改，默认是0.6）：
 **colbert_rerank**
 ~~~
@@ -35,7 +35,7 @@ from WisdoM import WMReranker
 ~~~
     reranked_response = reranker.st_rerank(question, similarity_cutoff=0.6)
 ~~~
-![图片3](_v_images/20240428235813385_28154.png )
+![图片3](Fig/20240428235813385_28154.png )
 
 ### 打印回答：
 ~~~
