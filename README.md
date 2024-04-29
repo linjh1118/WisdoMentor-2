@@ -51,21 +51,21 @@ print(res, token_num)
 
 ```python
 model_path = "E:\\LLMs\\miniCPM-bf16\\miniCPM-bf16"
-res, token_num = wm.long_llmlingua_zip(model=model_path, 
+res, token_num = zipper.long_llmlingua_zip(model=model_path, 
                  context=text,
                  instruction="",
                  question="介绍叶文洁",
                  rate=0.5,
                  force_tokens=["\n"],
                  )
-print(token_num)
+print(res, token_num)
 ```
 
 ### LLMLingua-2
 
 ```python
 model_path = "./llmlingua-2-xlm-roberta-large-meetingbank"
-res, token_num = wm.llmlingua2_zip(model=model_path, 
+res, token_num = zipper.llmlingua2_zip(model=model_path, 
                  context=text,
                  instruction="",
                  question="",
@@ -79,7 +79,7 @@ print(res, token_num)
 
 ```python
 model_path = "./llmlingua-2-bert-base-multilingual-cased-meetingbank"
-res, token_num = wm.llmlingua2_zip(model=model_path, 
+res, token_num = zipper.llmlingua2_zip(model=model_path, 
                  context=text,
                  instruction="",
                  question="",
@@ -97,6 +97,6 @@ print(res, token_num)
 Token indices sequence length is longer than the specified maximum sequence length for this model (193547 > 512). Running this sequence through the model will result in indexing errorodel will result in indexing errors
 ```
 
-按照 [Issue #3 · microsoft/LLMLingua (github.com)](https://github.com/microsoft/LLMLingua/issues/3) 中的回答：可以忽略此警告，在 LLMLingua 中，逐段处理数据，并压缩超出上下文窗口限制的 KV 缓存。
+按照 [Issue #3 · microsoft/LLMLingua](https://github.com/microsoft/LLMLingua/issues/3) 中的回答：可以忽略此警告，在 LLMLingua 中，逐段处理数据，并压缩超出上下文窗口限制的 KV 缓存。
 
 ![](./images/issue.png)
