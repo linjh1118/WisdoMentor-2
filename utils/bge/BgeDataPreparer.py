@@ -1,7 +1,7 @@
 import os
 from typing import List
 import pickle
-from llama_index.core.schema import BaseNode
+from llama_index.core.schema import TextNode
 from llama_index.core.llms.utils import LLM
 from llama_index.core import SimpleDirectoryReader
 from llama_index.core.node_parser import SimpleNodeParser
@@ -26,7 +26,7 @@ class BgeDataPreparer:
         self.val_file_path = val_file_path
         self.output_dir = output_dir
 
-    def prepare(self, llm: LLM = None) -> None:
+    def prepare(self, llm: LLM = None, prompt_template: str = None) -> None:
         if self.train_file_path.endswith(".pkl"):
             train_nodes = self.load_nodes(self.train_file_path)
         else:
@@ -49,15 +49,31 @@ class BgeDataPreparer:
         val_dataset.save_json(os.path.join(self.output_dir, "val.json"))
 
     def generate_qa_pairs(
-        self, llm: LLM, nodes: List[BaseNode]
+        self, llm: LLM, nodes: List[TextNode], prompt_template: str = None
     ) -> EmbeddingQAFinetuneDataset:
-        qa_pairs = generate_qa_embedding_pairs(llm, self.train_file_path)
+        if prompt_template is None:
+            prompt_template = """\
+                                以下是背景信息。
+
+                                ---------------------
+                                {context_str}
+                                ---------------------
+
+                                根据上述背景信息，且不考虑任何先验知识，
+                                请生成以下查询的问题。
+
+                                您是一名教师/教授。您的任务是为即将到来的\
+                                测验/考试设置{num_questions_per_chunk}个问题。\
+                                问题应该在整个文档中具有多样性。\
+                                请将问题限制在所提供的背景信息范围内。"
+                            """
+        qa_pairs = generate_qa_embedding_pairs(nodes, llm)
         return qa_pairs
 
-    def save_nodes(self, nodes: List[BaseNode], output_path: str) -> None:
+    def save_nodes(self, nodes: List[TextNode], output_path: str) -> None:
         with open(output_path, "wb") as f:
             pickle.dump(nodes, f)
 
-    def load_nodes(self, input_path: str) -> List[BaseNode]:
+    def load_nodes(self, input_path: str) -> List[TextNode]:
         with open(input_path, "rb") as f:
             return pickle.load(f)

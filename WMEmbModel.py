@@ -1,10 +1,13 @@
 import os
 from typing import Optional, Any
 from torch import cuda
+from torch import Tensor
 from utils.bge.BgeEvaluator import BgeEvaluator
 from utils.bge.BgeDataSpliter import BgeDataSpliter
 from utils.bge.BgeVocabExpander import BgeVocabExpander
+from utils.bge.BgeDataPreparer import BgeDataPreparer
 from utils.bge.BgeFinetuner import BgeFinetuner
+from utils.bge.BgeEmbeddingGetter import BgeEmbeddingGetter
 
 
 class WMEmbModel:
@@ -38,7 +41,7 @@ class WMEmbModel:
     ):
         try:
             spliter = BgeDataSpliter(
-                tokenizer=self.weight_path, data_file_path=data_file_path
+                tokenizer_path=self.weight_path, data_file_path=data_file_path
             )
         except FileNotFoundError as e:
             print(e)
@@ -64,6 +67,15 @@ class WMEmbModel:
             print(f"Error occurred when initializing BgeVocabExpander: {e}")
             return
         expander.expand(new_words, output_path)
+
+    def prepare(self, train_file_path, val_file_path, output_dir):
+        try:
+            preparer = BgeDataPreparer(train_file_path, val_file_path, output_dir)
+        except FileNotFoundError as e:
+            print(e)
+        except Exception as e:
+            print(f"Error occurred when initializing BgeDataPreparer: {e}")
+        preparer.prepare()
 
     def finetune(
         self,
@@ -101,3 +113,16 @@ class WMEmbModel:
             print(f"Error occurred when initializing BgeFinetuner: {e}")
             return
         finetuner.finetune()
+
+    def get_embedding(
+        self, model_path: str, tokenizer_path: str, sentences: list[str]
+    ) -> Tensor:
+        try:
+            embedding_getter = BgeEmbeddingGetter(model_path, tokenizer_path)
+        except FileNotFoundError as e:
+            print(e)
+            return
+        except Exception as e:
+            print(f"Error occurred when initializing BgeEmbeddingGetter: {e}")
+            return
+        return embedding_getter.get_embedding(sentences)

@@ -18,14 +18,14 @@ class BgeDataSpliter:
             FileNotFoundError: 找不到文件
             e: 未知错误
         """
-        if not os.pardir.exists(tokenizer_path):
+        if not os.path.exists(tokenizer_path):
             raise FileNotFoundError(f"Tokenizer path {tokenizer_path} does not exist.")
         if not os.path.exists(data_file_path):
             raise FileNotFoundError(f"Data file path {data_file_path} does not exist.")
         if not os.path.isfile(data_file_path):
             raise FileNotFoundError(f"Data file path {data_file_path} is not a file.")
         try:
-            self.tokenizer = AutoTokenizer(tokenizer_path)
+            self.tokenizer = AutoTokenizer.from_pretrained(tokenizer_path)
         except Exception as e:
             raise e
         self.data_file_path = data_file_path
@@ -59,7 +59,8 @@ class BgeDataSpliter:
         # 构建正则表达式
         pattern = "|".join(map(re.escape, stop_words))
         # 按照正则表达式分割文本
-        sentences = re.split(pattern, data)
+        sentence = "".join(data)
+        sentences = re.split(pattern, sentence)
         # 去除空行
         sentences = [s.strip() for s in sentences if s.strip()]
 
