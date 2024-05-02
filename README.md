@@ -100,3 +100,33 @@ Token indices sequence length is longer than the specified maximum sequence leng
 按照 [Issue #3 · microsoft/LLMLingua](https://github.com/microsoft/LLMLingua/issues/3) 中的回答：可以忽略此警告，在 LLMLingua 中，逐段处理数据，并压缩超出上下文窗口限制的 KV 缓存。
 
 ![](./images/issue.png)
+
+
+
+# SftGen/DpoGen使用:
+
+## 参数说明
+
+`data_source` 原数据文件夹，默认为./data，现支持处理单个.txt文件或含有若干.txt文件的文件夹
+
+ `output_file_path` sft数据输出路径，默认为./data/output
+
+`llm_model`使用的大语言模型名称。为"gpt"或"ollama"，默认为"ollama"
+
+## 使用示例
+
+类实例化：
+
+```python
+sft_gen = WMSftGen(data_source=data_source, output_file_path=output_file_path, llm_model=llm_model)
+dpo_gen = WMDpoGen(data_source=data_source, output_file_path=output_file_path, llm_model=llm_model)
+```
+
+方法使用：
+
+```python
+# 无返回结果，运行成功后在对应的输出文件夹下输出处理后数据
+sft_gen.sft_generator()
+dpo_gen.dpo_generator()
+```
+
