@@ -1,0 +1,12 @@
+{
+    "indices": [
+        4,
+        11,
+        3
+    ],
+    "knowledges": [
+        "Investigating the Impact of Transfer Learning and Knowledge Distillation on Small Data Classification Tasks",
+        "A Hybrid Approach for Intelligent Tutoring Systems: Integrating Knowledge Tracing with Reinforcement Learning",
+        "Enhancing Natural Language Understanding in Chatbot Systems using Transformer-based Models and Knowledge Graphs"
+    ]
+}
