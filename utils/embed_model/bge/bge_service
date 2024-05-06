@@ -1,0 +1,17 @@
+1. get_embedding api行为
+Done
+
+2. bge
+    a. 扩充此表 sh脚本
+    b. 微调 sh脚本
+
+
+3. LLM生成
+
+4. prompt压缩 服务
+
+5. FAISS 增删改查 服务
+    a. add : (Document, 对应向量) -> None
+    b. delete Document约定
+    c. update 先不管。 self.delete + self.add
+    d. search (embedding) --> List(Doc)
