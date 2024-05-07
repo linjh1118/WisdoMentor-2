@@ -8,6 +8,11 @@ class llmlingua_zip(Prompt):
         super().__init__()
 
     def prompt_zip(self, prompt) -> str:
+        print(11111111111111111)
+        print(11111111111111111)
+        print(11111111111111111)
+        print(11111111111111111)
+        print(11111111111111111)
         return super().prompt_zip(prompt)
     
     def prompt_gen(self, query, documents: List[Document]) -> str:
