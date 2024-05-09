@@ -44,7 +44,7 @@ class LLMLinguaZip(Prompt):
             )
         doc_zip, zip_tokens = zip_res['compressed_prompt'], zip_res['compressed_tokens']
         
-        question_merge = f"以上是有关于问题的参考资料，请根据上面的资料回答问题：{query}"
+        question_merge = f"\n以上是有关于问题的参考资料，请根据上面的资料回答问题：{query}"
         
         zip_prompt = f"{doc_zip}{question_merge}"
         
