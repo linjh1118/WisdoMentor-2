@@ -1,0 +1,32 @@
+===== 1 =====
+
+## search from text
+indices: [4, 11, 3]
+knowledges: ['Investigating the Impact of Transfer Learning and Knowledge Distillation on Small Data Classification Tasks', 'A Hybrid Approach for Intelligent Tutoring Systems: Integrating Knowledge Tracing with Reinforcement Learning', 'Enhancing Natural Language Understanding in Chatbot Systems using Transformer-based Models and Knowledge Graphs']
+
+## search from vec
+indices: [9, 5, 12]
+knowledges: ['Analyzing the Robustness of Neural Networks against Adversarial Attacks: A Comparative Study of Defense Mechanisms', 'Integrating Explainable AI Techniques into Medical Diagnosis Systems for Enhanced Transparency and Trust', 'Investigating the Impact of Data Augmentation Techniques on Deep Learning Models for Image Classification']
+
+## search from vec
+indices: [11, 18, 0]
+knowledges: ['A Hybrid Approach for Intelligent Tutoring Systems: Integrating Knowledge Tracing with Reinforcement Learning', 'Enhancing Recommendation Systems with Contextual Information: A Hybrid Approach using Graph Neural Networks', 'Exploring the Synergistic Potential of Reinforcement Learning and Swarm Intelligence for Adaptive Resource Allocation']
+
+## add doc list
+before add
+indices: [8, 11, 3]
+knowledges: ['Harnessing the Potential of Quantum Computing for Solving Combinatorial Optimization Problems', 'A Hybrid Approach for Intelligent Tutoring Systems: Integrating Knowledge Tracing with Reinforcement Learning', 'Enhancing Natural Language Understanding in Chatbot Systems using Transformer-based Models and Knowledge Graphs']
+
+## remove items list
+all_idx:  {'all_idx': [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29]}
+not build
+indices: []
+knowledges: []
+build
+indices: [26, 3, 6]
+knowledges: ['BERT-based Question Answering System for Knowledge Base Completion', 'Enhancing Natural Language Understanding in Chatbot Systems using Transformer-based Models and Knowledge Graphs', 'Advancements in Self-supervised Learning: From Representation Learning to Feature Extraction']
+all_idx:  {'all_idx': [0, 1, 2, 3, 5, 6, 7, 8, 9, 10, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29]}
+test add
+indices: [26, 8, 29]
+knowledges: ['BERT-based Question Answering System for Knowledge Base Completion', 'Harnessing the Potential of Quantum Computing for Solving Combinatorial Optimization Problems', 'Sarcasm Detection in Online Conversations using Contextual Embeddings']
+change_history:  add text: A Deep Learning Approach for Sentiment Analysis in Social Media Texts	add text: Exploring Transformer Models for Neural Machine Translation	add text: Named Entity Recognition in Biomedical Texts using Conditional Random Fields	add text: Enhancing Text Summarization with Reinforcement Learning	add text: Graph-based Approaches for Document Clustering in Natural Language Processing	add text: Multi-modal Sentiment Analysis: Integrating Text and Image Features	add text: BERT-based Question Answering System for Knowledge Base Completion	add text: Adversarial Attacks on Text Classification Models: A Comparative Study	add text: Leveraging Pre-trained Language Models for Text Style Transfer	add text: Sarcasm Detection in Online Conversations using Contextual Embeddings	rm idx: 11	rm idx: 4
