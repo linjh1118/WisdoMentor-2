@@ -1,4 +1,0 @@
-pip install llama-index-postprocessor-colbert-rerank
-pip install llama-index-postprocessor-flag-embedding-reranker
-pip install llama-index-llms-ollama
-pip install faiss-cpu
