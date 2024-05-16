@@ -1,4 +1,3 @@
-import json
 import requests
 from .base import Store
 from typing import List
@@ -31,7 +30,7 @@ class AnnStore(Store):
                 "query_vec": query_embed
             }
         ).json()["knowledges"]
-        return [Document(page_content=knowledge) for knowledge in results] # 这里对Document的构造还需要再测试一下
+        return [Document(page_content=knowledge) for knowledge in results]
     
     def delete_documents_by_ids(self, doc_ids: List[int]) -> bool:
         super().delete_documents_by_ids(doc_ids)
