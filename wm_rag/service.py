@@ -17,7 +17,7 @@ async def insert_doc_to_store(insert_doc_params: InsertDocParams) -> None:
     contents = app.split_content(content)
     return
 
-# 暂时先不接入query扩展和query重写
+# 暂时先不接入query扩展，query重写和重排，重排可以考虑bge_reranker_v2_m3，它的效果很好
 @service.post("/getResponseFromLLM", summary="根据query获取语言模型回答")
 def get_response_from_llm(get_response_params: GetResponseParams) -> str:
     app = AppRegister(get_response_params.app_name)
