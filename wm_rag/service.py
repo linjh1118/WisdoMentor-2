@@ -29,3 +29,5 @@ def get_response_from_llm(get_response_params: GetResponseParams) -> str:
     prompt_zipped = app.zip_prompt(prompt) # 这里需要合并一下天润的代码，看看天润的代码是否需要做成服务
     response = app.get_response(prompt_zipped)
     return response
+
+from langchain_text_splitters import NLTKTextSplitter

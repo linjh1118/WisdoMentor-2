@@ -2,7 +2,9 @@ from loader import TextLoader
 from splitter import CharacterSplitter
 from store import AnnStore
 from websearch import ArxivCallback, BaiduCallback
-from prompt import BasePrompt
+from prompt_gen import BasePromptGen
+from prompt_zip import BasePromptZip
+from response_gen import BaseResponseGen
 
 LOADER = {
     "text": TextLoader
@@ -22,14 +24,14 @@ WEBSEARCH = {
 }
 
 PROMPTGEN = {
-    "base": BasePrompt
+    "base": BasePromptGen
 }
 
 PROMPTZIP = {
-    "base": BasePrompt
+    "base": BasePromptZip
 }
 
 RESPONSEGEN = {
-    "base": BasePrompt
+    "base": BaseResponseGen
 }
 
