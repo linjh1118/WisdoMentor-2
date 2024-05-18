@@ -9,8 +9,12 @@ class Prompt(ABC):
     
     @abstractmethod
     def prompt_gen(self, query, documents: List[Document]) -> str:
-        pass
+        raise NotImplementedError
     
     @abstractmethod
     def prompt_zip(self, prompt) -> str:
-        pass
+        raise NotImplementedError
+    
+    @abstractmethod
+    def response_gen(self, prompt: str) -> str:
+        raise NotImplementedError

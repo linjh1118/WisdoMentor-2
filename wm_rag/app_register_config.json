@@ -1,0 +1,37 @@
+{
+    "wisdomentor": {
+        "database": [],
+        "loader": {
+            "name": "text",
+            "args": {}
+        },
+        "splitter": {
+            "name": "character",
+            "args": {
+                "chunk_size": 400
+            }
+        },
+        "websearch": [
+            {
+                "name": "arxiv",
+                "args": {}   
+            },
+            {
+                "name": "baidu",
+                "args": {}
+            }
+        ],
+        "prompt_gen": {
+            "name": "base",
+            "args": {}
+        },
+        "prompt_zip": {
+            "name": "base",
+            "args": {}
+        },
+        "response_gen": {
+            "name": "base",
+            "args": {}
+        }
+    }
+}

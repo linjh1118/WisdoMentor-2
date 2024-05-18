@@ -1,41 +1,31 @@
-from fastapi import FastAPI, Body
-from langchain_community.document_loaders import TextLoader
+# rag框架需要配置成一个常态化的service rag服务，通过http请求获取服务
+from fastapi import FastAPI
+from entity import InsertDocParams, GetResponseParams
+from langchain_core.documents import Document
+from app_register import AppRegister
 
-from embedding import BertEmbedding
-from store import AnnStore
-from prompt import BasePrompt
+service = FastAPI()
 
-import sys
-import os
-sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
-from utils.base import *
-logger = set_naive_logger(os.path.join(os.path.dirname(__file__), '..', 'log_cache'), log_name='wm_rag.server')
-
-SERVERIP = "82.157.10.130"
-app = FastAPI()
-
-@app.post("/chat", summary="获得回答")
-def wm_chat(query: str = Body()):
-    global logger
-    logger.info('##### Welcome to WisdoMentor-2. Please enjoy. #####'); logger.info('')
-    logger.info(f'# 1. query: {query}'); logger.info('')
-    
-    query_embed = BertEmbedding(f"http://{SERVERIP}", "8888").embed_text(query)
-    logger.info(f'# 2. query_embedding[:3]: {[float("{:.3f}".format(x)) for x in query_embed[:3]]}'); logger.info('')
-    
-    recall_documents = AnnStore(f"http://{SERVERIP}", "8890").search_by_embed(query_embed)
-    showcase_top3 = [doc.page_content.replace('\n', ' ') for doc in recall_documents[:3]]
-    logger.info(f"# 3. top-3 recall: {showcase_top3}"); logger.info('')
-    
-    # 临时挤在8888端口，长期在8888也行
-    response = BasePrompt(f"http://{SERVERIP}", "8888").prompt_gen(query, recall_documents)
-    logger.info(f'# 4. response of WisdoMentor-2:\n{response}')
-    return response
-
-@app.post("/addDocToRepo", summary="向知识库中添加内容")
-def add_doc_to_repo(router_path: str = Body()):
-    document = TextLoader(router_path)
-    documents = [document]
-    documents_embed = BertEmbedding(f"http://{SERVERIP}", "8888").embed_documents(documents)
-    AnnStore(f"http://{SERVERIP}", "8890").add_documents(documents, documents_embed)
+# 这里还差embedding模型，需要请求embedding服务，再p40上进行常态化启动，需要封装docker
+# 这里还差Ann存储服务，需要请求存储服务，在p40上常态化启动，需要封装docker
+@service.post("/insertDocToStore", summary="向知识库中插入内容")
+async def insert_doc_to_store(insert_doc_params: InsertDocParams) -> None:
+    if insert_doc_params.file_type == "stream":
+        insert_doc_params.file_content = (await insert_doc_params.file_content.read()).decode("utf-8")
+    app = AppRegister(insert_doc_params.app_name)
+    content = app.load_file(insert_doc_params.file_content)
+    contents = app.split_content(content)
     return
+
+# 暂时先不接入query扩展，query重写和重排，重排可以考虑bge_reranker_v2_m3，它的效果很好
+@service.post("/getResponseFromLLM", summary="根据query获取语言模型回答")
+def get_response_from_llm(get_response_params: GetResponseParams) -> str:
+    app = AppRegister(get_response_params.app_name)
+    query_embed = [0] * 128 # 这里需要调用embedding模型进行
+    web_contents = app.get_websearch_contents(get_response_params.query_content)
+    repo_contents = [] # 这里需要调用知识库查询服务进行
+    contents = web_contents + repo_contents
+    prompt = app.get_prompt(get_response_params.query_content, contents)
+    prompt_zipped = app.zip_prompt(prompt) # 这里需要合并一下天润的代码，看看天润的代码是否需要做成服务
+    response = app.get_response(prompt_zipped)
+    return response
