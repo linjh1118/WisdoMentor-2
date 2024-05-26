@@ -1,0 +1,83 @@
+services:
+  embedding:
+    container_name: wisdomentor2.0-embedding
+    image: wisdomentor2.0-embedding:latest
+    build: ./embedding
+    ports:
+      - "10000:10000"
+    networks:
+      - embedding-network
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - capabilities: [ gpu ]
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=3
+  store:
+    container_name: wisdomentor2.0-store
+    image: wisdomentor2.0-store:latest
+    build: ./store
+    ports:
+      - "10001:10001"
+    networks:
+      - store-network
+    volumes:
+      - /home/roo/dream/RAG/data/AnnStore:/app/data
+  rerank:
+    container_name: wisdomentor2.0-rerank
+    image: wisdomentor2.0-rerank:latest
+    build: ./rerank
+    ports:
+      - "10002:10002"
+    networks:
+      - rerank-network
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - capabilities: [ gpu ]
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=3
+  zip:
+    container_name: wisdomentor2.0-zip
+    image: wisdomentor2.0-zip:latest
+    build: ./zip
+    ports:
+      - "10003:10003"
+    networks:
+      - zip-network
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - capabilities: [ gpu ]
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=2
+  chat:
+    container_name: wisdomentor2.0-chat
+    image: wisdomentor2.0-chat:latest
+    build: ./chat
+    ports:
+      - "10004:11434"
+    networks:
+      - chat-network
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - capabilities: [ gpu ]
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=3
+
+networks:
+  embedding-network:
+    driver: bridge
+  store-network:
+    driver: bridge
+  rerank-network:
+    driver: bridge
+  zip-network:
+    driver: bridge
+  chat-network:
+    driver: bridge
