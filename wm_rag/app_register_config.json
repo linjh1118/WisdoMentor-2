@@ -1,12 +1,27 @@
 {
     "wisdomentor": {
-        "database": [],
+        "database": [
+            {
+                "name": "ann",
+                "args": {
+                    "router_path": "http://localhost",
+                    "port": "10001"
+                }
+            }
+        ],
         "loader": {
             "name": "text",
             "args": {}
         },
+        "embedding": {
+            "name": "bge",
+            "args": {
+                "router_path": "http://localhost",
+                "port": "10000"
+            }
+        },
         "splitter": {
-            "name": "character",
+            "name": "recursive",
             "args": {
                 "chunk_size": 400
             }
@@ -14,24 +29,42 @@
         "websearch": [
             {
                 "name": "arxiv",
-                "args": {}   
+                "args": {}
             },
             {
                 "name": "baidu",
                 "args": {}
             }
         ],
+        "rerank": {
+            "name": "bge_normal",
+            "args": {
+                "router_path": "http://localhost",
+                "port": "10002",
+                "path": "bge_normal_rerank"
+            }
+        },
         "prompt_gen": {
             "name": "base",
-            "args": {}
+            "args": {
+                "router_path": "http://localhost",
+                "port": "-1"
+            }
         },
         "prompt_zip": {
-            "name": "base",
-            "args": {}
+            "name": "llmlingua2",
+            "args": {
+                "router_path": "http://localhost",
+                "port": "10003",
+                "path": "llmlingua2"
+            }
         },
         "response_gen": {
-            "name": "base",
-            "args": {}
+            "name": "qwen",
+            "args": {
+                "router_path": "http://localhost",
+                "port": "10004"
+            }
         }
     }
 }

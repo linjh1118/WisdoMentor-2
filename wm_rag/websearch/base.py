@@ -1,56 +1,41 @@
-from typing import List,Optional,Tuple
+from typing import List, Dict
 from abc import ABC, abstractmethod
+
 from langchain_core.documents import Document
-import asyncio
-import os
 
-current_file_path = os.path.abspath(__file__)
-current_folder = os.path.dirname(current_file_path)
-
-call_info_save_path = os.path.join(current_folder, "net_callback_content")
-question_path = os.path.join(current_folder,"question.text")
-question_baidu=os.path.join(current_folder,"question_baidu.text")
-ans_path = os.path.join(current_folder,"llm_ans")
+from web_extract.base import WebExtractor
 
 
-class NetCallback(ABC):
+class WebSearcher(ABC):
     def __init__(self) -> None:
         super().__init__()
-        if not "." in call_info_save_path:
-            if not os.path.exists(call_info_save_path):
-                os.makedirs(call_info_save_path)
-        if not "." in ans_path:
-            if not os.path.exists(ans_path):
-                os.makedirs(ans_path)
-        self.upload_files = None
-        self.file_names = None
 
-        return
-    
-    def set_upload_files(self, upload_files:List[str])->None:
-        self.upload_files = upload_files
-
-    def set_file_names(self, file_names:List[str])->None:
-        self.file_names = file_names
-        
     @abstractmethod
-    def recall(self, max_result:Optional[int]=3)->None:
-        """#函数必须最后必须
-            使用set_upload_files和set_file_names
-        给类变量upload_files，file_names进行赋值"""
-        raise NotImplementedError("Subclasses must implement this method.")
-    
-    def llm_ans(self) -> List[str]:
-        
-        from libs.kimi import kimi_file_res
+    def search(
+        self, query: str, max_res: int = 3, extractor: WebExtractor = None
+    ) -> List[Document]:
+        raise NotImplementedError("Search method must be implemented by the subclass.")
 
-        if not hasattr(self, 'upload_files') or not self.upload_files:
-            raise ValueError("upload_files 没有被正确赋值或为空")
-
-        if not hasattr(self, 'file_names') or not self.file_names:
-            raise ValueError("file_names 没有被正确赋值或为空")
-        
-        LLM_ans=[]
-        for upload_file,file_name in zip(self.upload_files,self.file_names):
-            LLM_ans.append(asyncio.run(kimi_file_res(upload_file=upload_file,title=file_name,question_file=self.question_path)))
-        return [Document(page_content=ans) for ans in LLM_ans]
+    def search_queries(
+        self,
+        queries: List[str],
+        max_res: List[int] = None,
+        start_page: List[int] = None,
+        end_page: List[int] = None,
+    ) -> List[List[Document]]:
+        if max_res is None:
+            max_res = [3] * len(queries)
+        if start_page is None:
+            start_page = [1] * len(queries)
+        if end_page is None:
+            end_page = [1] * len(queries)
+        assert len(queries) == len(max_res) == len(start_page) == len(end_page)
+        return [
+            self.search(
+                query,
+                max_res=max_res[i],
+                start_page=start_page[i],
+                end_page=end_page[i],
+            )
+            for i, query in enumerate(queries)
+        ]

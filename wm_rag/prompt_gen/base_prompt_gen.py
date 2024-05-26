@@ -4,6 +4,7 @@ from langchain_core.documents import Document
 from .base import PromptGen
 import requests
 
+
 class BasePromptGen(PromptGen):
     def __init__(self, router_path: str, port: str) -> None:
         super().__init__()
@@ -11,7 +12,7 @@ class BasePromptGen(PromptGen):
         self.port = port
         self.request_url = f"{self.router_path}:{self.port}"
         return
-    
+
     def prompt_gen(self, query, contents: List[Document]) -> str:
         prompt_merge = ""
         for cont in contents:

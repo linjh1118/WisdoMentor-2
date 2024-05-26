@@ -4,8 +4,8 @@ from mimetypes import guess_type
 import aiofiles
 
 
-from libs.consts import FAKE_HEADERS
-from libs.utils import Utils
+from .consts import FAKE_HEADERS
+from .utils import Utils
 
 
 class File:

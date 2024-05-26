@@ -4,10 +4,10 @@ from typing import List
 from .base import Embedding
 
 
-class BertEmbedding(Embedding):
-    def __init__(self, route_path: str, port: str):
+class BgeEmbedding(Embedding):
+    def __init__(self, router_path: str, port: str):
         super().__init__()
-        self.route_path = route_path
+        self.route_path = router_path
         self.port = port
         self.request_url = f"{self.route_path}:{self.port}"
         return
@@ -16,7 +16,7 @@ class BertEmbedding(Embedding):
         super().embed_text(text)
         result = requests.post(
             url=f"{self.request_url}/get_embedding",
-            json={"text": [text], "model_type": "bert"},
+            json={"text": [text], "model_type": "bge"},
         )
         if result.status_code != 200:
             raise ValueError(

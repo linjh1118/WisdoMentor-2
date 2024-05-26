@@ -1,0 +1,10 @@
+{
+  "query_json_path": "query.json",
+  "response_json_path": "query.json",
+  "store_route_path": "http://localhost",
+  "store_port": "10001",
+  "embedding_route_path": "http://localhost",
+  "embedding_port": "10000",
+  "max_tries": 10,
+  "save_path": "res.json"
+}

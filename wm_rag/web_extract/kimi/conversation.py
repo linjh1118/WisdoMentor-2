@@ -1,8 +1,8 @@
 import httpx
 import json
 
-from libs.utils import Utils
-from libs.consts import FAKE_HEADERS
+from .utils import Utils
+from .consts import FAKE_HEADERS
 
 
 class Conversation:

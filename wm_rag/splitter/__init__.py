@@ -1,1 +1,2 @@
-from .character_spliter import CharacterSplitter
+from .character_splitter import CharacterSplitter
+from .recursive_splitter import RecursiveSplitter

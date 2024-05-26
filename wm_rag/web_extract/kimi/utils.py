@@ -2,9 +2,10 @@ import os
 import time
 import httpx
 import json
+import chardet
 from typing import Tuple
 
-from libs.consts import FAKE_HEADERS, ACCESS_TOKEN_EXPIRES
+from .consts import FAKE_HEADERS, ACCESS_TOKEN_EXPIRES
 
 
 def singleton(cls):
@@ -48,7 +49,7 @@ class Utils:
 
         if len(phone) != 11:
             print("手机号格式不正确")
-            return await Utils.get_refresh_token()
+            return await Utils().get_refresh_token()
 
         async with httpx.AsyncClient(timeout=15) as client:
             response = await client.post(
@@ -132,15 +133,21 @@ class Utils:
 
             try:
                 response = Utils().check_response(response)
-                res = json.loads(response.content.decode("utf-8"))
+                raw_data = response.content
+                detected_encoding = chardet.detect(raw_data)["encoding"]
+                if detected_encoding is None:
+                    detected_encoding = "utf-8"
+                res = json.loads(
+                    response.content.decode(detected_encoding, errors="ignore")
+                )
                 access_token = res.get("access_token")
                 self.access_token = access_token
                 self.access_expires = time.time() + ACCESS_TOKEN_EXPIRES
                 return access_token, refresh_token
-            except:
-                print("获取access_token失败...尝试重新获取refresh_token后重试")
-                refresh_token = await Utils.get_refresh_token()
-                access_token, refresh_token = await Utils.get_access_token(
+            except Exception as e:
+                print(f"获取access_token失败...\n{e}\n尝试重新获取refresh_token后重试")
+                refresh_token = await Utils().get_refresh_token()
+                access_token, refresh_token = await Utils().get_access_token(
                     refresh_token, force_reget
                 )
                 return access_token, refresh_token
